@@ -14,6 +14,8 @@ export class Db {
     },
   });
 
+  public dbClient = this.client.db("cms");
+
   public async run() {
     try {
       // Connect the client to the server	(optional starting in v4.7)
