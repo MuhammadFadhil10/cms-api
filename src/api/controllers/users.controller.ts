@@ -2,7 +2,7 @@ import { hash, compare } from "bcryptjs";
 import { sign } from "jsonwebtoken";
 import { Request, Response } from "express";
 
-import UserModel from "@/models/users.models";
+import UserModel from "@/api/models/users.models";
 import { User } from "@/types";
 
 export const signup = async (req: Request, res: Response) => {
