@@ -16,7 +16,7 @@ const authMiddleware = (
 
   const decodedToken = verify(token, process.env.JWT_SECRET as string);
 
-  if (!token)
+  if (!decodedToken)
     return res
       .status(505)
       .json({ data: null, message: "Internal server error" });
