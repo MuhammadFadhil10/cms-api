@@ -7,6 +7,8 @@ import bodyParser from "body-parser";
 import { config } from "dotenv";
 import { Db } from "@/db";
 
+import router from "@/api/routes/router";
+
 // config
 config();
 
@@ -18,12 +20,11 @@ const API_PREFIX = "/api/v1";
 const app = express();
 app.use(bodyParser.json());
 
-app.get(
-  `${API_PREFIX}/test-server-run`,
-  async (req: Request, res: Response) => {
-    res.send("Server run succesfully ");
-  },
-);
+app.get(`${API_PREFIX}/test-server-run`, (req: Request, res: Response) => {
+  res.send("Server run succesfully ");
+});
+
+app.use(API_PREFIX, router);
 
 app.listen(PORT, async () => {
   const db = new Db();
