@@ -4,3 +4,9 @@ export interface User {
   name: string;
   profilePicture?: string;
 }
+
+export interface Web {
+  name: string;
+  userId: string;
+  sharedUserId?: string[];
+}

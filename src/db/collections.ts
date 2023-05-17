@@ -1,6 +1,7 @@
 import { Db } from "./config.ts";
 
 const dbInstance = new Db();
+
 export const test = new Db().dbClient.collection("users");
 export class DbCollections {
   static users = dbInstance.dbClient.collection("users");
