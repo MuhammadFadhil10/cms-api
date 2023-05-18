@@ -1,12 +1,26 @@
 import { DbCollections, toObjectId } from "@/db";
-import { Web } from "@/types";
+import { Web, WebPage } from "@/types";
 import { Filter, Document } from "mongodb";
+import PagesModels from "./pages.models";
 
 const web = DbCollections.webs;
 
 export default class WebsModels {
   static async insertOne(data: Web) {
-    return await web.insertOne(data);
+    const createdWeb = await web.insertOne(data);
+
+    const initPage: WebPage = {
+      name: "Page 1",
+      isMain: true,
+      webId: createdWeb.insertedId.toString(),
+      style: {
+        backgroundColor: "white",
+      },
+    };
+
+    await PagesModels.insertOne(initPage);
+
+    return createdWeb;
   }
 
   static async findById(id: string) {
@@ -17,17 +31,34 @@ export default class WebsModels {
     return web.find(filter as Filter<Document>).toArray();
   }
 
-  static async deleteOne(id: string) {
-    return await web.deleteOne({ _id: toObjectId(id) });
-  }
-
   static async updateOne(id: string, body: Partial<Web>) {
     return await web.updateOne({ _id: toObjectId(id) }, { $set: body });
   }
 
+  static async deleteOne(id: string) {
+    const webPages = await PagesModels.find({ webId: id });
+    const webIds = webPages.map((webId) => webId._id.toString());
+    const deletedWeb = await web.deleteOne({ _id: toObjectId(id) });
+
+    await PagesModels.deleteBulkByWebId(webIds);
+
+    return deletedWeb;
+  }
+
   static async deleteMany(ids: string[]) {
     const objectIds = ids.map((id) => toObjectId(id));
+    const pagesRelated = await PagesModels.find({
+      webId: { $in: ids },
+    });
+    const pagesWebIds = (pagesRelated as unknown as WebPage[]).map(
+      (page) => page.webId,
+    );
+    const deleteBulkWebResult = await web.deleteMany({
+      _id: { $in: objectIds },
+    });
 
-    return await web.deleteMany({ _id: { $in: objectIds } });
+    await PagesModels.deleteBulkByWebId(pagesWebIds);
+
+    return deleteBulkWebResult;
   }
 }

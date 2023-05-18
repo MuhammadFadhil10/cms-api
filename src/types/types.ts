@@ -10,3 +10,15 @@ export interface Web {
   userId: string;
   sharedUserId?: string[];
 }
+
+export type WebPageStyles = {
+  backgroundColor?: string;
+};
+
+export interface WebPage {
+  name: string;
+  webId: string;
+  isMain: boolean;
+  style?: WebPageStyles;
+  queryParams?: { [key: string]: string }[];
+}

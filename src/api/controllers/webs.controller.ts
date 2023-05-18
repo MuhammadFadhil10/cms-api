@@ -39,7 +39,7 @@ export const findWeb = async (req: Request, res: Response) => {
 
 export const updateWeb = async (req: Request, res: Response) => {
   try {
-    const body = req.body;
+    const body: Partial<Web> = req.body;
     const { id } = req.params;
 
     await WebsModels.updateOne(id, body);
