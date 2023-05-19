@@ -37,10 +37,10 @@ export default class WebsModels {
 
   static async deleteOne(id: string) {
     const webPages = await PagesModels.find({ webId: id });
-    const webIds = webPages.map((webId) => webId._id.toString());
-    const deletedWeb = await web.deleteOne({ _id: toObjectId(id) });
+    const pageIds: string[] = webPages.map((page) => page._id.toString());
 
-    await PagesModels.deleteBulkByWebId(webIds);
+    await PagesModels.deleteBulkById(pageIds);
+    const deletedWeb = await web.deleteOne({ _id: toObjectId(id) });
 
     return deletedWeb;
   }
@@ -50,14 +50,12 @@ export default class WebsModels {
     const pagesRelated = await PagesModels.find({
       webId: { $in: ids },
     });
-    const pagesWebIds = (pagesRelated as unknown as WebPage[]).map(
-      (page) => page.webId,
-    );
+    const pageIds = pagesRelated.map((page) => page._id.toString());
+
+    await PagesModels.deleteBulkById(pageIds);
     const deleteBulkWebResult = await web.deleteMany({
       _id: { $in: objectIds },
     });
-
-    await PagesModels.deleteBulkByWebId(pagesWebIds);
 
     return deleteBulkWebResult;
   }

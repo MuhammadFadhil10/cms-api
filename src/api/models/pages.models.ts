@@ -1,6 +1,7 @@
 import { Filter, Document } from "mongodb";
 import { DbCollections, toObjectId } from "@/db";
 import { WebPage } from "@/types";
+import ItemsModels from "./items.models";
 
 const page = DbCollections.pages;
 
@@ -18,16 +19,16 @@ export default class PagesModels {
   }
 
   static async deleteOne(id: string) {
+    await ItemsModels.deleteBulkByPageId([id]);
+
     return await page.deleteOne({ _id: toObjectId(id) });
   }
 
   static async deleteBulkById(ids: string[]) {
     const objectIds = ids.map((id) => toObjectId(id));
 
-    return await page.deleteMany({ _id: { $in: objectIds } });
-  }
+    await ItemsModels.deleteBulkByPageId(ids);
 
-  static async deleteBulkByWebId(webIds: string[]) {
-    return await page.deleteMany({ webId: { $in: webIds } });
+    return await page.deleteMany({ _id: { $in: objectIds } });
   }
 }

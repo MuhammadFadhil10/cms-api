@@ -1,5 +1,5 @@
 import { Request, Response } from "express";
-import PagesModels from "../models/pages.models";
+import PagesModels from "../models/pages.models.ts";
 import { WebPage } from "@/types";
 
 export const createPage = async (req: Request, res: Response) => {

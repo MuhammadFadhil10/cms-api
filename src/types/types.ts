@@ -1,3 +1,9 @@
+// types
+export type SharedItemProperties = {
+  style: { [key: string]: string };
+};
+
+// interfaces
 export interface User {
   email: string;
   password: string;
@@ -11,14 +17,19 @@ export interface Web {
   sharedUserId?: string[];
 }
 
-export type WebPageStyles = {
-  backgroundColor?: string;
-};
-
 export interface WebPage {
   name: string;
   webId: string;
   isMain: boolean;
-  style?: WebPageStyles;
+  style?: { [key: string]: string };
   queryParams?: { [key: string]: string }[];
+}
+
+export interface Item {
+  name: string;
+  pageId: string;
+  type: string;
+  isLocked: boolean;
+  isVisible: boolean;
+  properties: SharedItemProperties & { [key: string]: string };
 }

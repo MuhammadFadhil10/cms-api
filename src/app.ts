@@ -7,6 +7,7 @@ import bodyParser from "body-parser";
 import { config } from "dotenv";
 import { Db } from "@/db";
 
+import itemsRouter from "@/api/routes/items.routes.ts";
 import pagesRouter from "@/api/routes/pages.routes.ts";
 import userRouter from "@/api/routes/users.routes.ts";
 import websRouter from "@/api/routes/webs.routes.ts";
@@ -26,6 +27,7 @@ app.get(`${API_PREFIX}/test-server-run`, (req: Request, res: Response) => {
   res.send("Server run succesfully ");
 });
 
+app.use(API_PREFIX, itemsRouter);
 app.use(API_PREFIX, pagesRouter);
 app.use(API_PREFIX, userRouter);
 app.use(API_PREFIX, websRouter);
