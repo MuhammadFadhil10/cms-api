@@ -44,3 +44,5 @@ app.listen(PORT, async () => {
 
   console.log("\n app listening on port: ", PORT, " 🚀🚀🚀");
 });
+
+module.exports = app;
