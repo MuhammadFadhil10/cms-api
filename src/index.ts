@@ -26,6 +26,7 @@ const app = express();
 app.use(bodyParser.json());
 
 app.get(`${API_PREFIX}/test-server-run`, (req: Request, res: Response) => {
+  console.log("server run test");
   res.send("Server run succesfully ");
 });
 
