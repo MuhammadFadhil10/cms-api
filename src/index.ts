@@ -37,7 +37,7 @@ app.use(API_PREFIX, pagesRouter);
 app.use(API_PREFIX, userRouter);
 app.use(API_PREFIX, websRouter);
 
-app.listen(PORT, async () => {
+app.listen(PORT || 8000, async () => {
   const db = new Db();
 
   await db.run();
