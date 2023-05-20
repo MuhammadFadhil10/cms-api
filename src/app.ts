@@ -4,6 +4,7 @@ import type { Request, Response } from "express";
 
 import express from "express";
 import bodyParser from "body-parser";
+import corsHandlers from "./utils/utils";
 import { config } from "dotenv";
 import { Db } from "@/db";
 
@@ -26,6 +27,8 @@ app.use(bodyParser.json());
 app.get(`${API_PREFIX}/test-server-run`, (req: Request, res: Response) => {
   res.send("Server run succesfully ");
 });
+
+app.use(corsHandlers());
 
 app.use(API_PREFIX, itemsRouter);
 app.use(API_PREFIX, pagesRouter);
