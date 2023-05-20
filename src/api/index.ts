@@ -4,7 +4,7 @@ import type { Request, Response } from "express";
 
 import express from "express";
 import bodyParser from "body-parser";
-import corsHandlers from "./utils/utils";
+import corsHandlers from "../utils/utils";
 import helmet from "helmet";
 import { config } from "dotenv";
 import { Db } from "@/db";
@@ -44,5 +44,3 @@ app.listen(PORT, async () => {
 
   console.log("\n app listening on port: ", PORT, " 🚀🚀🚀");
 });
-
-module.exports = app;
