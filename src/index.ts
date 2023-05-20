@@ -44,5 +44,3 @@ app.listen(PORT || 8000, async () => {
 
   console.log("\napp listening on port: ", PORT, " 🚀🚀🚀");
 });
-
-module.exports = app;
