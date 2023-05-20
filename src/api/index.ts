@@ -42,7 +42,7 @@ app.listen(PORT, async () => {
 
   await db.run();
 
-  console.log("\n app listening on port: ", PORT, " 🚀🚀🚀");
+  console.log("\napp listening on port: ", PORT, " 🚀🚀🚀");
 });
 
 module.exports = app;
