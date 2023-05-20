@@ -5,7 +5,8 @@
   "main": "app.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "ts-node ./src/api/index.ts",
+    "build": "tsc",
+    "start": "node dist/index.ts",
     "dev": "nodemon ./src/api/index.ts",
     "lint": "eslint . --fix --max-warnings=0",
     "format": "prettier . --write",
