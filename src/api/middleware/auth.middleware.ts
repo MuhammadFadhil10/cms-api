@@ -9,8 +9,6 @@ const authMiddleware = (
 ) => {
   const token = req.header("authorization")?.split(" ")[1];
 
-  console.log("token: ", token);
-
   if (!token)
     return res.status(401).json({ data: null, message: "Unauthorized" });
 

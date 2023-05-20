@@ -59,15 +59,6 @@ export const findItem = async (req: Request, res: Response) => {
   }
 };
 
-// not tested yet
-
-/*
-    -update one
-    -update bulk
-    -delete one
-    -delete bulk by item id
-*/
-
 export const updateItem = async (req: Request, res: Response) => {
   try {
     const body: Partial<Item> = req.body;

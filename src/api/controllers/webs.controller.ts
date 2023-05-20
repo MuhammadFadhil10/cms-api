@@ -1,11 +1,11 @@
 import { Request, Response } from "express";
-import { Web, WebFilterQueryParams } from "@/types";
-import { getWebFilterParams } from "./utils";
+import { ExtendedRequest, Web } from "@/types";
 import WebsModels from "../models/webs.models";
 
 export const createWeb = async (req: Request, res: Response) => {
   try {
-    const { name, userId }: Web = req.body;
+    const { name }: Web = req.body;
+    const { id: userId } = (req as ExtendedRequest).user;
 
     await WebsModels.insertOne({ name, userId, sharedUserId: [] });
 
@@ -19,15 +19,28 @@ export const createWeb = async (req: Request, res: Response) => {
   }
 };
 
-export const findWeb = async (req: Request, res: Response) => {
+export const findWebs = async (req: Request, res: Response) => {
   try {
-    const filter = getWebFilterParams(
-      req.query as unknown as WebFilterQueryParams,
-    );
-
-    const webs = await WebsModels.find(filter);
+    const { id: userId } = (req as ExtendedRequest).user;
+    const webs = await WebsModels.find({ userId });
 
     return res.status(200).json({ data: webs, message: "" });
+  } catch (error) {
+    console.log(error);
+
+    return res
+      .status(500)
+      .json({ data: null, message: "Internal server error" });
+  }
+};
+
+export const findWebById = async (req: Request, res: Response) => {
+  try {
+    const { id } = req.params;
+
+    const web = await WebsModels.findById(id);
+
+    return res.status(200).json({ data: web, message: "" });
   } catch (error) {
     console.log(error);
 
