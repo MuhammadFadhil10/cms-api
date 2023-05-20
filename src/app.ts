@@ -5,6 +5,7 @@ import type { Request, Response } from "express";
 import express from "express";
 import bodyParser from "body-parser";
 import corsHandlers from "./utils/utils";
+import helmet from "helmet";
 import { config } from "dotenv";
 import { Db } from "@/db";
 
@@ -29,6 +30,7 @@ app.get(`${API_PREFIX}/test-server-run`, (req: Request, res: Response) => {
 });
 
 app.use(corsHandlers());
+app.use(helmet());
 
 app.use(API_PREFIX, itemsRouter);
 app.use(API_PREFIX, pagesRouter);
