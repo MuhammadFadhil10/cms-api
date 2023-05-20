@@ -1,5 +1,6 @@
 import express from "express";
 
+import authMiddleware from "@/api/middleware/auth.middleware.ts";
 import {
   createWeb,
   deleteWeb,
@@ -10,10 +11,10 @@ import {
 
 const router = express.Router();
 
-router.post("/webs", createWeb);
-router.get("/webs", findWeb);
-router.patch("/webs/:id", updateWeb);
-router.delete("/webs/:id", deleteWeb);
-router.delete("/webs", deleteBulkWeb);
+router.post("/webs", authMiddleware, createWeb);
+router.get("/webs", authMiddleware, findWeb);
+router.patch("/webs/:id", authMiddleware, updateWeb);
+router.delete("/webs/:id", authMiddleware, deleteWeb);
+router.delete("/webs", authMiddleware, deleteBulkWeb);
 
 export default router;
