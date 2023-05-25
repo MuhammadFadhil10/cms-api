@@ -25,13 +25,12 @@ const API_PREFIX = "/api/v1";
 const app = express();
 app.use(bodyParser.json());
 
-app.get(`${API_PREFIX}/test-server-run`, (req: Request, res: Response) => {
-  console.log("server run test");
-  res.send("Server run succesfully ");
-});
-
 app.use(corsHandlers());
 app.use(helmet());
+
+app.get(`${API_PREFIX}/test-server-run`, (req: Request, res: Response) => {
+  res.status(200).json({ message: "Server run succesfully!" });
+});
 
 app.use(API_PREFIX, itemsRouter);
 app.use(API_PREFIX, pagesRouter);
