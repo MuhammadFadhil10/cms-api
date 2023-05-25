@@ -78,7 +78,7 @@ export const signin = async (req: Request, res: Response) => {
           profilePicture: userExist.profilePicture,
         },
       },
-      message: "Email or Password wrong!",
+      message: "",
     });
   } catch (error) {
     throw Error(error as string);
