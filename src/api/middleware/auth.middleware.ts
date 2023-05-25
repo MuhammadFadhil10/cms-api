@@ -15,9 +15,7 @@ const authMiddleware = (
   const decodedToken = verify(token, process.env.JWT_SECRET as string);
 
   if (!decodedToken)
-    return res
-      .status(505)
-      .json({ data: null, message: "Internal server error" });
+    return res.status(401).json({ data: null, message: "Unauthorized" });
 
   (req as ExtendedRequest).user = decodedToken;
 
