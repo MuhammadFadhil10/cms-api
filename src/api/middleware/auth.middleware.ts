@@ -15,7 +15,9 @@ const authMiddleware = (
   const decodedToken = verify(token, process.env.JWT_SECRET as string);
 
   if (!decodedToken)
-    return res.status(401).json({ data: null, message: "Unauthorized" });
+    return res
+      .status(401)
+      .json({ data: null, message: "token invalid / expired" });
 
   (req as ExtendedRequest).user = decodedToken;
 
