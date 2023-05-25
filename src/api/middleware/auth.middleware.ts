@@ -7,21 +7,24 @@ const authMiddleware = (
   res: Response,
   next: NextFunction,
 ) => {
-  const token = req.header("authorization")?.split(" ")[1];
+  try {
+    const token = req.header("authorization")?.split(" ")[1];
 
-  if (!token)
-    return res.status(401).json({ data: null, message: "Unauthorized" });
+    if (!token)
+      return res.status(401).json({ data: null, message: "Unauthorized" });
 
-  const decodedToken = verify(token, process.env.JWT_SECRET as string);
+    const decodedToken = verify(token, process.env.JWT_SECRET as string);
 
-  if (!decodedToken)
-    return res
-      .status(401)
-      .json({ data: null, message: "token invalid / expired" });
+    if (!decodedToken) {
+      throw Error;
+    }
 
-  (req as ExtendedRequest).user = decodedToken;
+    (req as ExtendedRequest).user = decodedToken;
 
-  next();
+    next();
+  } catch (error) {
+    return res.status(401).json({ data: null, message: error });
+  }
 };
 
 export default authMiddleware;
