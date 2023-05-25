@@ -53,7 +53,16 @@ export const signin = async (req: Request, res: Response) => {
       { email: userExist.email, id: userExist._id },
       `${process.env.JWT_SECRET}`,
       {
-        expiresIn: "2h",
+        expiresIn: "3h",
+        algorithm: "HS256",
+      },
+    );
+
+    const refreshToken = sign(
+      { email: userExist.email, id: userExist._id },
+      `${process.env.JWT_SECRET}`,
+      {
+        expiresIn: "3d",
         algorithm: "HS256",
       },
     );
@@ -61,6 +70,7 @@ export const signin = async (req: Request, res: Response) => {
     return res.status(401).json({
       data: {
         token,
+        refreshToken,
         user: {
           id: userExist._id,
           email: userExist.email,
